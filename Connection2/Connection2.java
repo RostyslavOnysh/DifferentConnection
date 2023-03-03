@@ -2,10 +2,7 @@ package Connection2;
 
 import com.mysql.cj.jdbc.Driver;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Connection2 {
     public static void main(String[] args) {
@@ -44,7 +41,7 @@ public class Connection2 {
         try {
             Connection connection = ConnectionManager.open();
             //открываю statement после connection.метод create statement + try catch
-            var statement = connection.createStatement();
+            var statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             System.out.println(connection.getTransactionIsolation());
             var executeResult = statement.executeQuery(sql);
             // var executeResult = statement.execute(sql);   //for ddl operation
@@ -66,5 +63,5 @@ public class Connection2 {
 // через (execute) только true or false;
 //есть метод для возврата количества обновленных строк
 // sout(statement.getUpdateCount());
-// ResultSet похож на iterator
+// ResultSet похож на iterator (аналог курсора в базе данных)
 //шоб вывести результат выборки нада юзать цикл while (executeResult.next()){sout(executeResult.getLong(id))}
